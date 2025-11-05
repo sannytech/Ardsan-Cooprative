@@ -40,6 +40,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
+    // ✅ Replace this with your Firebase project configuration
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -53,19 +54,20 @@
     const db = getFirestore(app);
     const ADMIN_CODE = "ARDSAN123";
 
-    document.getElementById("signup-form").addEventListener("submit", async (e) => {
+    const form = document.getElementById("signup-form");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name = name.value.trim();
-      const phone = phone.value.trim();
-      const email = email.value.trim();
-      const ippis = ippis.value.trim();
-      const department = department.value.trim();
-      const designation = designation.value.trim();
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const ippis = document.getElementById("ippis").value.trim();
+      const department = document.getElementById("department").value.trim();
+      const designation = document.getElementById("designation").value.trim();
       const adminCode = document.getElementById("adminCode").value.trim();
 
       if (adminCode !== ADMIN_CODE) {
-        alert("Invalid admin code.");
+        alert("Invalid Admin Code. Please check and try again.");
         return;
       }
 
@@ -75,11 +77,11 @@
           status: "pending",
           createdAt: serverTimestamp()
         });
-        alert("Application submitted successfully!");
-        e.target.reset();
-      } catch (err) {
-        console.error(err);
-        alert("Submission failed. Check console for details.");
+        alert("✅ Application submitted successfully for admin approval!");
+        form.reset();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("⚠️ Failed to submit application. See console for details.");
       }
     });
   </script>
